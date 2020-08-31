@@ -44,7 +44,7 @@ namespace TicTacToe.ViewModel
 
             if (CheckVictory())
             {
-                if (MessageBox.Show("Player won!/nWould you like to play again?","Congratulations",MessageBoxButton.YesNo,MessageBoxImage.None) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Player won!\nWould you like to play again?","Congratulations",MessageBoxButton.YesNo,MessageBoxImage.None) == MessageBoxResult.Yes)
                 {
                     TicTacToeView newGame = new TicTacToeView();
                     newGame.Show();
@@ -54,23 +54,20 @@ namespace TicTacToe.ViewModel
                 {
                     Environment.Exit(0);
                 }
-            }     
-            row = rnd.Next(0,3);
-            column = rnd.Next(0, 3);
-            int rowO;
-            int columnO;
+            }
+            int rowO, columnO;
             do
             {
-                rowO = rnd.Next(0, 2);
-                columnO = rnd.Next(0, 2);
-            } while (CheckFreeSpot(row,column));
+                rowO = rnd.Next(0, 3);
+                columnO = rnd.Next(0, 3);
+            } while (CheckFreeSpot(rowO,columnO));
             Button btn1 = (Button)GetGridElement(view.gameGrid, rowO+1, columnO+1);
             ticTacToeGrid[rowO, columnO] = "O";
             btn1.Content = "O";
 
             if (CheckVictory())
             {
-                if (MessageBox.Show("Computer won!/nWould you like to play again?", "Game Over", MessageBoxButton.YesNo, MessageBoxImage.None) == MessageBoxResult.Yes)
+                if (MessageBox.Show("Computer won!\nWould you like to play again?", "Game Over", MessageBoxButton.YesNo, MessageBoxImage.None) == MessageBoxResult.Yes)
                 {
                     TicTacToeView newGame = new TicTacToeView();
                     newGame.Show();
@@ -85,19 +82,17 @@ namespace TicTacToe.ViewModel
         }
         private bool CanFieldClickExecute(object param)
         {
-            return true;
-            //Button btn = (Button)param;
-            //if (btn.Content == null)
-            //{
-            //    return true;
-            //}
-            //else
-            //{
-            //    return false;
-            //}
-            //int row = Grid.GetRow(btn);
-            //int column = Grid.GetColumn(btn);
-            //return CheckFreeSpot(row, column);
+            if (param == null) return true;
+
+            Button btn = (Button)param;
+            if (btn.Content == null)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
 
         public bool CheckVictory()
